@@ -20,5 +20,18 @@ export default {
             url:`mcp/announcement/${id}`,
             method:"get"
         })
+    },
+    saveByUserId(userId,announcement){
+        return request({
+            url:`mcp/announcement/save/${userId}`,
+            method:'post',
+            data: announcement
+        })
+    },
+    delete(id){
+        return request({
+            url:`mcp/announcement/delete/${id}`,
+            method:'delete'
+        })
     }
 }

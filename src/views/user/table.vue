@@ -74,7 +74,7 @@ export default {
             userList:null,
             total:null,
             current:null,
-            limit:2,
+            limit:3,
             page:1,
             loading:true
         }
@@ -84,8 +84,8 @@ export default {
     }
     ,
     methods:{
-        getUserList(page=1,size=2){
-            userApi.getUserList(page,size).then(res=>{
+        getUserList(page=1,limit=3){
+            userApi.getUserList(page,this.limit).then(res=>{
                 // console.log(res.data)
                 this.userList = res.data.userList
                 this.total = res.data.total

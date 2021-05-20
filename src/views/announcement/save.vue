@@ -10,7 +10,10 @@
                     <el-input v-model="announcement.title" style="width: 500px;"></el-input>
                 </el-form-item>
                 <el-form-item label="公告内容">
-                    <el-input v-model="announcement.content" type="text" style="width: 300px;"></el-input>
+                    <!-- <el-input v-model="announcement.content" type="text" style="width: 300px;"></el-input> -->
+                    <vue-tinymce
+                      v-model="announcement.content" 
+                      :setting="setting" />
                 </el-form-item>
                 <el-form-item>
                     <el-button v-if="isSave" type="primary" @click="onSave">添加</el-button>
@@ -31,7 +34,16 @@ export default {
         title:"添加公告",
         announcement:{},
         isSave:true,
-        isUpdate:false
+        isUpdate:false,
+        setting:{
+          menubar: false,
+          toolbar: "undo redo | fullscreen | formatselect alignleft aligncenter alignright alignjustify | link unlink | numlist bullist | image media table | fontselect fontsizeselect forecolor backcolor | bold italic underline strikethrough | indent outdent | superscript subscript | removeformat |",
+          toolbar_drawer: "sliding",
+          quickbars_selection_toolbar: "removeformat | bold italic underline strikethrough | fontsizeselect forecolor backcolor",
+          plugins: "link image media table lists fullscreen quickbars",
+          language: 'zh_CN', //本地化设置
+          height: 350
+        }
       }
     },
     created(){
@@ -47,10 +59,24 @@ export default {
     },
     methods:{
       onSave(){
-
+        announcementApi.saveByUserId( this.$store.state.user.userId,this.announcement)
+        .then(res=>{
+          this.$message({
+                    message: res.message,
+                    type: 'success'
+                });
+                this.$router.push("/admin/announcement/list") 
+        })
       },
       onUpdate(){
-
+        announcementApi.update(this.announcement)
+        .then(res=>{
+          this.$message({
+                    message: res.message,
+                    type: 'success'
+                });
+                this.$router.push("/admin/announcement/list") 
+        })
       },
       clearForm(){
         this.announcement = {}
