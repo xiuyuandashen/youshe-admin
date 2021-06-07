@@ -15,6 +15,8 @@ import store from './store'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import elementUtils from 'vue-element-utils'
+Vue.use(elementUtils);
 
 import tinymce from 'tinymce'
 import VueTinymce from '@packy-tang/vue-tinymce'
